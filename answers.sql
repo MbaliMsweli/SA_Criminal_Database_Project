@@ -163,12 +163,47 @@ SELECT TOP 1 FullName,
 MIN(Age) as YoungestSuspect
 FROM [dbo].[SA_criminal_raw_data]
 GROUP BY FullName
+
+
 --23. Retrieve the oldest suspect in the dataset.
+SELECT TOP 1 FullName,
+MAX(Age) as oldestSuspect
+FROM [dbo].[SA_criminal_raw_data]
+GROUP BY FullName
 --24. Count the number of cases handled by each investigating officer.
+SELECT DISTINCT InvestigatingOfficer,
+COUNT (CaseNumber)as NumberOfCases
+FROM [dbo].[SA_criminal_raw_data]
+GROUP BY InvestigatingOfficer
 
 --25. Calculate the average Estimated Fraud Amount per crime type.
+SELECT DISTINCT CrimeType,
+AVG (EstimatedFraudAmount_ZAR)as Estimated_Fraud_Amount
+FROM [dbo].[SA_criminal_raw_data]
+GROUP BY CrimeType
+
 --26. Display all cases occurring in Gauteng province.
+SELECT *
+FROM [dbo].[SA_criminal_raw_data]
+WHERE Province = 'Gauteng'
+
 --27. Retrieve all Fraud cases classified as High risk.
+SELECT *
+FROM [dbo].[SA_criminal_raw_data]
+WHERE CrimeType = 'Fraud' AND RiskLevel = 'High'
+
 --28. Count the number of cases per year based on CrimeDate.
---29. Display all suspects with a Financial Score below 500.
+SELECT 
+    YEAR(CrimeDate) AS CrimeYear, 
+    COUNT(*) AS CaseCount
+FROM [dbo].[SA_criminal_raw_data]
+GROUP BY YEAR(CrimeDate)
+ORDER BY CrimeYear;
+
+--29. Display all suspects with a Financial Score below 500.SELECT 
+   SELECT *
+FROM [dbo].[SA_criminal_raw_data]
+WHERE FinancialScore < 500
+
+
 --30. Identify the most common Crime Type in the dataset.
