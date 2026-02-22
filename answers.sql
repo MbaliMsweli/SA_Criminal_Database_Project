@@ -127,11 +127,42 @@ FROM [dbo].[SA_criminal_raw_data]
 WHERE CrimeDate >='2020-01-01'
 
 --17. Count how many cases resulted in a Convicted status.
+SELECT CaseStatus,
+COUNT(*) AS TotalCount
+FROM [dbo].[SA_criminal_raw_data]
+WHERE CaseStatus = 'Convicted'
+GROUP BY CaseStatus
+
 --18. Retrieve all suspects with more than three previous offenses.
+SELECT *
+FROM [dbo].[SA_criminal_raw_data]
+WHERE PreviousOffenses > 3
+
 --19. Show the distribution of cases by Risk Level.
+SELECT RiskLevel,
+COUNT(*) AS TotalCount
+FROM [dbo].[SA_criminal_raw_data]
+GROUP BY RiskLevel
+ORDER BY TotalCount DESC
+
 --20. Calculate the total Estimated Fraud Amount across all cases.
+SELECT DISTINCT CaseNumber,
+SUM(EstimatedFraudAmount_ZAR) AS TotalFraudAmount
+FROM [dbo].[SA_criminal_raw_data]
+GROUP BY CaseNumber
+
 --21. Identify the province with the highest number of cases.
+SELECT TOP 1 Province,
+COUNT(CaseNumber) AS HighestNumberOfCases
+FROM [dbo].[SA_criminal_raw_data]
+GROUP BY Province
+ORDER BY HighestNumberOfCases DESC
+
 --22. Retrieve the youngest suspect in the dataset.
+SELECT TOP 1 FullName,
+MIN(Age) as YoungestSuspect
+FROM [dbo].[SA_criminal_raw_data]
+GROUP BY FullName
 --23. Retrieve the oldest suspect in the dataset.
 --24. Count the number of cases handled by each investigating officer.
 
