@@ -207,3 +207,8 @@ WHERE FinancialScore < 500
 
 
 --30. Identify the most common Crime Type in the dataset.
+SELECT TOP 1 CrimeType, 
+    COUNT(*) AS TotalCount
+FROM [dbo].[SA_criminal_raw_data]
+GROUP BY CrimeType
+ORDER BY  TotalCount DESC;
